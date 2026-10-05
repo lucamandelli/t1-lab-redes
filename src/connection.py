@@ -46,8 +46,13 @@ def handle_connection(conn, addr, root):
 
 
 def respond(conn, client, req, root):
-    # HTTP/1.1 é persistente por padrão; só fecha se o cliente pedir
-    keep_alive = req.headers.get('connection', '').lower() != 'close'
+    # HTTP/1.1 é persistente por padrão; só fecha se o cliente pedir.
+    # HTTP/1.0 é o contrário: fecha, a não ser que o cliente peça keep-alive
+    connection = req.headers.get('connection', '').lower()
+    if req.version == 'HTTP/1.0':
+        keep_alive = connection == 'keep-alive'
+    else:
+        keep_alive = connection != 'close'
 
     if req.method not in ('GET', 'HEAD'):
         send(conn, client, 405, req.method, keep_alive, {'Allow': 'GET, HEAD'})
