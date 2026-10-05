@@ -3,9 +3,10 @@
 # O TCP entrega um fluxo de bytes: um recv() pode trazer meia requisição, uma inteira,
 # ou uma requisição e o começo da próxima. Por isso o parser recebe o buffer acumulado
 # da conexão e responde:
-#   - None:             ainda não chegou a linha em branco; esperar mais bytes
+#   - None:             ainda não chegou a linha em branco (ou o corpo inteiro); esperar mais bytes
 #   - BadRequest:       requisição malformada (vira 400)
 #   - (req, consumidos): requisição pronta + quantos bytes ela ocupou (o resto é da próxima)
+import re
 from urllib.parse import unquote
 
 
@@ -34,7 +35,8 @@ def parse_request(buffer):
     if len(parts) != 3:
         raise BadRequest()
     method, target, version = parts
-    if not target.startswith('/') or not version.startswith('HTTP/'):
+    # Versão no formato HTTP/x.y (ex: HTTP/1.1)
+    if not target.startswith('/') or not re.fullmatch(r'HTTP/\d\.\d', version):
         raise BadRequest()
 
     # Tira a query string e decodifica o percent-encoding (%20 -> espaço)
@@ -48,4 +50,13 @@ def parse_request(buffer):
         name, value = line.split(':', 1)
         headers[name.strip().lower()] = value.strip()
 
-    return HttpRequest(method, path, version, headers), end + 4
+    # Se tiver corpo (ex: POST), ele também faz parte desta requisição: espera chegar
+    # inteiro e consome junto, senão ele seria lido como o começo da próxima
+    length = headers.get('content-length', '0')
+    if not length.isdigit():
+        raise BadRequest()
+    consumed = end + 4 + int(length)
+    if len(buffer) < consumed:
+        return None
+
+    return HttpRequest(method, path, version, headers), consumed
