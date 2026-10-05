@@ -84,4 +84,5 @@ def send(conn, client, status, method, keep_alive, extra=None, body=None, type='
     headers.update(extra or {})
     head = build_head(status, headers)
     conn.sendall(head if method == 'HEAD' else head + body)
-    print(f'{datetime.now().isoformat()} {client} {method} -> {status}', flush=True)
+    # Texto e '\n' num único write, para linhas de threads diferentes não se misturarem
+    print(f'{datetime.now().isoformat()} {client} {method} -> {status}\n', end='', flush=True)
