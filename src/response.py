@@ -2,7 +2,6 @@
 import os
 from email.utils import formatdate
 
-# Identificador do grupo no cabeçalho Server (trocar pelo nome do grupo)
 SERVER_ID = 'TrabRedes-Grupo9/1.0'
 
 REASONS = {
