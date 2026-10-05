@@ -70,6 +70,7 @@ Atenção: no 403 use `--path-as-is`. Sem ele, o próprio curl apaga os `../` (e
 - `src/response.py`: monta a linha de status e os cabeçalhos (Date, Server, Content-Type)
 - `www/`: site de teste (inclui a página do teste de interoperabilidade)
 - `capturas/`: capturas do Wireshark (`.pcapng`)
+- `evidencias/`: saídas dos testes, para montar o relatório (não vai no .zip; ver [Evidências](#evidências))
 
 ## Problemas comuns
 
@@ -183,7 +184,7 @@ Cobrir os 10 itens do enunciado:
 ### 6. Entrega (.zip, um integrante só)
 
 - `src/`, `README.md`, `www/`, `capturas/c1.pcapng`, `capturas/c2.pcapng` e o relatório em PDF.
-- Não incluir pastas `__pycache__/` nem arquivos temporários.
+- Não incluir pastas `__pycache__/`, a pasta `evidencias/` nem arquivos temporários.
 
 ---
 
@@ -253,3 +254,18 @@ Saídas e logs em `evidencias/` (pasta de apoio para o relatório, não vai no .
   perto dos 14,5 ms medidos.
 - O C2 foi repetido 3 vezes (39,9 / 40,9 / 41,5 ms); a primeira execução teve uma pausa de ~32 ms do
   curl entre a 5ª e a 6ª requisição e foi descartada.
+
+### Evidências
+
+O enunciado não pede esses arquivos na entrega, mas pede que o relatório mostre a requisição e a resposta
+de cada teste (itens 2, 3, 5 e 6). As capturas só cobrem C1 e C2; o resto está em `evidencias/`:
+
+| Arquivo | O que tem | Item do relatório |
+|---|---|---|
+| `evidencias-windows.txt` | Saída do ping e dos curls de conformidade e segurança, rodados no Windows | 2, 3 e 6 |
+| `simultaneo.log` | Trecho do log do servidor com o Windows (`.105`) e o celular (`.103`) atendidos no mesmo segundo | 5 |
+| `servidor-completo.log` | Log inteiro do servidor na sessão (C1, C2, testes e acesso simultâneo) | apoio |
+
+No `evidencias-windows.txt`, cada saída vem misturada com mensagens `NativeCommandError` e com a barra de
+progresso do curl: é só o PowerShell tratando a saída de erro do curl como erro. Para o relatório, copiar
+apenas a linha `HTTP/1.1 ...`, os cabeçalhos e o corpo.

@@ -1,0 +1,749 @@
+﻿EVIDENCIAS - Servidor HTTP http://192.168.0.108:8080
+Gerado em: 2026-10-05 11:10:43
+curl.exe: C:\Program Files\Git\mingw64\bin\curl.exe
+
+===================================================================
+[Passo 1] ping -n 20 192.168.0.108
+-------------------------------------------------------------------
+
+Disparando 192.168.0.108 com 32 bytes de dados:
+Resposta de 192.168.0.108: bytes=32 tempo=93ms TTL=64
+Resposta de 192.168.0.108: bytes=32 tempo=1ms TTL=64
+Resposta de 192.168.0.108: bytes=32 tempo=32ms TTL=64
+Resposta de 192.168.0.108: bytes=32 tempo=36ms TTL=64
+Resposta de 192.168.0.108: bytes=32 tempo=52ms TTL=64
+Resposta de 192.168.0.108: bytes=32 tempo=1ms TTL=64
+Resposta de 192.168.0.108: bytes=32 tempo=77ms TTL=64
+Resposta de 192.168.0.108: bytes=32 tempo=86ms TTL=64
+Resposta de 192.168.0.108: bytes=32 tempo=96ms TTL=64
+Resposta de 192.168.0.108: bytes=32 tempo=106ms TTL=64
+Resposta de 192.168.0.108: bytes=32 tempo=2ms TTL=64
+Resposta de 192.168.0.108: bytes=32 tempo=2ms TTL=64
+Resposta de 192.168.0.108: bytes=32 tempo=2ms TTL=64
+Resposta de 192.168.0.108: bytes=32 tempo=54ms TTL=64
+Resposta de 192.168.0.108: bytes=32 tempo=14ms TTL=64
+Resposta de 192.168.0.108: bytes=32 tempo=1ms TTL=64
+Resposta de 192.168.0.108: bytes=32 tempo=2ms TTL=64
+Resposta de 192.168.0.108: bytes=32 tempo=1ms TTL=64
+Resposta de 192.168.0.108: bytes=32 tempo=2ms TTL=64
+Resposta de 192.168.0.108: bytes=32 tempo=124ms TTL=64
+
+Estatísticas do Ping para 192.168.0.108:
+    Pacotes: Enviados = 20, Recebidos = 20, Perdidos = 0 (0% de
+             perda),
+Aproximar um número redondo de vezes em milissegundos:
+    Mínimo = 1ms, Máximo = 124ms, Média = 39ms
+
+===================================================================
+[Passo 2 - C1] curl.exe -H "Connection: close" "http://192.168.0.108:8080/texto.txt?[1-10]"
+-------------------------------------------------------------------
+curl.exe :   % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+No C:\Users\lucap\AppData\Local\Temp\claude\C--Users-lucap-Documents-Luca-Projects\811295b9-0943-4901-90ef-c31449f78003
+\scratchpad\run_evidencias.ps1:48 caractere:7
++ $c1 = & $curl -H "Connection: close" "$base/texto.txt?[1-10]" 2>&1 |  ...
++       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (  % Total    % ... Time   Current:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0    237      0                              0
+100     27 100     27   0      0    237      0                              0
+100     27 100     27   0      0    237      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0   4582      0                              0
+100     27 100     27   0      0   4494      0                              0
+100     27 100     27   0      0   4417      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0   5608      0                              0
+100     27 100     27   0      0   5504      0                              0
+100     27 100     27   0      0   5430      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0   6419      0                              0
+100     27 100     27   0      0   6287      0                              0
+100     27 100     27   0      0   6153      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0   6034      0                              0
+100     27 100     27   0      0   5909      0                              0
+100     27 100     27   0      0   5836      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0   6101      0                              0
+100     27 100     27   0      0   5976      0                              0
+100     27 100     27   0      0   5811      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0   6658      0                              0
+100     27 100     27   0      0   6425      0                              0
+100     27 100     27   0      0   6264      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0   6423      0                              0
+100     27 100     27   0      0   6257      0                              0
+100     27 100     27   0      0   6164      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0   6512      0                              0
+100     27 100     27   0      0   6416      0                              0
+100     27 100     27   0      0   6354      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0   6818      0                              0
+100     27 100     27   0      0   6673      0                              0
+100     27 100     27   0      0   6518      0                              0
+Arquivo de texto de teste.
+
+===================================================================
+[Passo 3 - C2] curl.exe "http://192.168.0.108:8080/texto.txt?[1-10]"
+-------------------------------------------------------------------
+curl.exe :   % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+No C:\Users\lucap\AppData\Local\Temp\claude\C--Users-lucap-Documents-Luca-Projects\811295b9-0943-4901-90ef-c31449f78003
+\scratchpad\run_evidencias.ps1:57 caractere:7
++ $c2 = & $curl "$base/texto.txt?[1-10]" 2>&1 | Out-String
++       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (  % Total    % ... Time   Current:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0    424      0                              0
+100     27 100     27   0      0    423      0                              0
+100     27 100     27   0      0    423      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+Arquivo de texto de teste.
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0  10984      0                              0
+100     27 100     27   0      0  10735      0                              0
+100     27 100     27   0      0  10584      0                              0
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0  10761      0                              0
+100     27 100     27   0      0  10518      0                              0
+100     27 100     27   0      0  10161      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0  10400      0                              0
+100     27 100     27   0      0  10180      0                              0
+100     27 100     27   0      0   9818      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0    847      0                              0
+100     27 100     27   0      0    845      0                              0
+100     27 100     27   0      0    842      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+Arquivo de texto de teste.
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0  10900      0                              0
+100     27 100     27   0      0  10546      0                              0
+100     27 100     27   0      0  10348      0                              0
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0  11015      0                              0
+100     27 100     27   0      0  10667      0                              0
+100     27 100     27   0      0  10336      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+Arquivo de texto de teste.
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0  11316      0                              0
+100     27 100     27   0      0  10904      0                              0
+100     27 100     27   0      0  10600      0                              0
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0  11124      0                              0
+100     27 100     27   0      0  10625      0                              0
+100     27 100     27   0      0  10238      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0  11240      0                              0
+100     27 100     27   0      0  10761      0                              0
+100     27 100     27   0      0  10309      0                              0
+Arquivo de texto de teste.
+
+===================================================================
+[4a] curl.exe -i http://192.168.0.108:8080/texto.txt
+-------------------------------------------------------------------
+curl.exe :   % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+No C:\Users\lucap\AppData\Local\Temp\claude\C--Users-lucap-Documents-Luca-Projects\811295b9-0943-4901-90ef-c31449f78003
+\scratchpad\run_evidencias.ps1:16 caractere:10
++     $o = & $curl @cargs 2>&1 | Out-String
++          ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (  % Total    % ... Time   Current:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0   1744      0                              0
+100     27 100     27   0      0   1735      0                              0
+100     27 100     27   0      0   1728      0                              0
+HTTP/1.1 200 OK
+Date: Mon, 05 Oct 2026 14:12:51 GMT
+Server: TrabRedes-Grupo9/1.0
+Content-Type: text/plain
+Content-Length: 27
+Connection: keep-alive
+
+Arquivo de texto de teste.
+
+===================================================================
+[4b] curl.exe -I http://192.168.0.108:8080/imagem.png
+-------------------------------------------------------------------
+curl.exe :   % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+No C:\Users\lucap\AppData\Local\Temp\claude\C--Users-lucap-Documents-Luca-Projects\811295b9-0943-4901-90ef-c31449f78003
+\scratchpad\run_evidencias.ps1:16 caractere:10
++     $o = & $curl @cargs 2>&1 | Out-String
++          ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (  % Total    % ... Time   Current:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+  0  32258   0      0   0      0      0      0                              0
+  0  32258   0      0   0      0      0      0                              0
+  0  32258   0      0   0      0      0      0                              0
+HTTP/1.1 200 OK
+Date: Mon, 05 Oct 2026 14:12:51 GMT
+Server: TrabRedes-Grupo9/1.0
+Content-Type: image/png
+Content-Length: 32258
+Connection: keep-alive
+
+===================================================================
+[4c] curl.exe -i -X "GET X" http://192.168.0.108:8080/
+-------------------------------------------------------------------
+curl.exe :   % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+No C:\Users\lucap\AppData\Local\Temp\claude\C--Users-lucap-Documents-Luca-Projects\811295b9-0943-4901-90ef-c31449f78003
+\scratchpad\run_evidencias.ps1:16 caractere:10
++     $o = & $curl @cargs 2>&1 | Out-String
++          ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (  % Total    % ... Time   Current:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+HTTP/1.1 400 Bad Request
+Date: Mon, 05 Oct 2026 14:12:51 GMT
+Server: TrabRedes-Grupo9/1.0
+Content-Type: text/plain
+Content-Length: 16
+Connection: close
+
+400 Bad Request
+  0      0   0      0   0      0      0      0                              0
+100     16 100     16   0      0   2000      0                              0
+100     16 100     16   0      0   1976      0                              0
+100     16 100     16   0      0   1968      0                              0
+
+===================================================================
+[4d] curl.exe -i --path-as-is http://192.168.0.108:8080/../../Windows/System32/drivers/etc/hosts
+-------------------------------------------------------------------
+curl.exe :   % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+No C:\Users\lucap\AppData\Local\Temp\claude\C--Users-lucap-Documents-Luca-Projects\811295b9-0943-4901-90ef-c31449f78003
+\scratchpad\run_evidencias.ps1:16 caractere:10
++     $o = & $curl @cargs 2>&1 | Out-String
++          ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (  % Total    % ... Time   Current:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     14 100     14   0      0   2004      0                              0
+100     14 100     14   0      0   1975      0                              0
+100     14 100     14   0      0   1959      0                              0
+HTTP/1.1 403 Forbidden
+Date: Mon, 05 Oct 2026 14:12:51 GMT
+Server: TrabRedes-Grupo9/1.0
+Content-Type: text/plain
+Content-Length: 14
+Connection: keep-alive
+
+403 Forbidden
+
+===================================================================
+[4e] curl.exe -i http://192.168.0.108:8080/nao-existe.html
+-------------------------------------------------------------------
+curl.exe :   % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+No C:\Users\lucap\AppData\Local\Temp\claude\C--Users-lucap-Documents-Luca-Projects\811295b9-0943-4901-90ef-c31449f78003
+\scratchpad\run_evidencias.ps1:16 caractere:10
++     $o = & $curl @cargs 2>&1 | Out-String
++          ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (  % Total    % ... Time   Current:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     14 100     14   0      0   2401      0                              0
+100     14 100     14   0      0   2360      0                              0
+100     14 100     14   0      0   2335      0                              0
+HTTP/1.1 404 Not Found
+Date: Mon, 05 Oct 2026 14:12:51 GMT
+Server: TrabRedes-Grupo9/1.0
+Content-Type: text/plain
+Content-Length: 14
+Connection: keep-alive
+
+404 Not Found
+
+===================================================================
+[4f] curl.exe -i -X POST http://192.168.0.108:8080/
+-------------------------------------------------------------------
+curl.exe :   % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+No C:\Users\lucap\AppData\Local\Temp\claude\C--Users-lucap-Documents-Luca-Projects\811295b9-0943-4901-90ef-c31449f78003
+\scratchpad\run_evidencias.ps1:16 caractere:10
++     $o = & $curl @cargs 2>&1 | Out-String
++          ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (  % Total    % ... Time   Current:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     23 100     23   0      0    836      0                              0
+100     23 100     23   0      0    833      0                              0
+100     23 100     23   0      0    830      0                              0
+HTTP/1.1 405 Method Not Allowed
+Date: Mon, 05 Oct 2026 14:12:51 GMT
+Server: TrabRedes-Grupo9/1.0
+Content-Type: text/plain
+Content-Length: 23
+Connection: keep-alive
+Allow: GET, HEAD
+
+405 Method Not Allowed
+
+===================================================================
+[5a] curl.exe -i --path-as-is http://192.168.0.108:8080/../../Windows/System32/drivers/etc/hosts
+-------------------------------------------------------------------
+curl.exe :   % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+No C:\Users\lucap\AppData\Local\Temp\claude\C--Users-lucap-Documents-Luca-Projects\811295b9-0943-4901-90ef-c31449f78003
+\scratchpad\run_evidencias.ps1:16 caractere:10
++     $o = & $curl @cargs 2>&1 | Out-String
++          ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (  % Total    % ... Time   Current:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     14 100     14   0      0    600      0                              0
+100     14 100     14   0      0    599      0                              0
+100     14 100     14   0      0    598      0                              0
+HTTP/1.1 403 Forbidden
+Date: Mon, 05 Oct 2026 14:12:51 GMT
+Server: TrabRedes-Grupo9/1.0
+Content-Type: text/plain
+Content-Length: 14
+Connection: keep-alive
+
+403 Forbidden
+
+===================================================================
+[5b] curl.exe -i --path-as-is http://192.168.0.108:8080/%2e%2e/%2e%2e/Windows/win.ini
+-------------------------------------------------------------------
+curl.exe :   % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+No C:\Users\lucap\AppData\Local\Temp\claude\C--Users-lucap-Documents-Luca-Projects\811295b9-0943-4901-90ef-c31449f78003
+\scratchpad\run_evidencias.ps1:16 caractere:10
++     $o = & $curl @cargs 2>&1 | Out-String
++          ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (  % Total    % ... Time   Current:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     14 100     14   0      0   1609      0                              0
+100     14 100     14   0      0   1595      0                              0
+100     14 100     14   0      0   1580      0                              0
+HTTP/1.1 403 Forbidden
+Date: Mon, 05 Oct 2026 14:12:51 GMT
+Server: TrabRedes-Grupo9/1.0
+Content-Type: text/plain
+Content-Length: 14
+Connection: keep-alive
+
+403 Forbidden
+
+===================================================================
+[5c] curl.exe -i http://192.168.0.108:8080/..%2f..%2f..%2fWindows%2fwin.ini
+-------------------------------------------------------------------
+curl.exe :   % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+No C:\Users\lucap\AppData\Local\Temp\claude\C--Users-lucap-Documents-Luca-Projects\811295b9-0943-4901-90ef-c31449f78003
+\scratchpad\run_evidencias.ps1:16 caractere:10
++     $o = & $curl @cargs 2>&1 | Out-String
++          ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (  % Total    % ... Time   Current:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     14 100     14   0      0   1904      0                              0
+100     14 100     14   0      0   1885      0                              0
+HTTP/1.1 403 Forbidden
+Date: Mon, 05 Oct 2026 14:12:51 GMT
+Server: TrabRedes-Grupo9/1.0
+Content-Type: text/plain
+Content-Length: 14
+Connection: keep-alive
+
+403 Forbidden
+100     14 100     14   0      0   1867      0                              0
+
+===================================================================
+[Passo 6] RESUMO
+-------------------------------------------------------------------
+Media do ping (RTT): 39 ms  (Minimo = 1ms, Maximo = 124ms, 0% de perda, 20/20 recebidos)
+
+Codigos de status - Passo 4 (conformidade):
+  4a GET -i /texto.txt             -> 200
+  4b HEAD -I /imagem.png           -> 200
+  4c metodo invalido GET X /       -> 400
+  4d traversal etc/hosts           -> 403
+  4e 404 /nao-existe.html          -> 404
+  4f POST /                        -> 405
+
+Codigos de status - Passo 5 (seguranca, esperado 403):
+  5a traversal etc/hosts           -> 403  [OK]
+  5b traversal %2e%2e win.ini      -> 403  [OK]
+  5c traversal ..%2f win.ini       -> 403  [OK]
+
+FIM.
+
+===================================================================
+C2 - repeticoes
+(gerado em 2026-10-05 11:15:56)
+
+-------------------------------------------------------------------
+[C2 - repeticao 1] curl.exe "http://192.168.0.108:8080/texto.txt?[1-10]"
+-------------------------------------------------------------------
+curl.exe :   % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+No C:\Users\lucap\AppData\Local\Temp\claude\C--Users-lucap-Documents-Luca-Projects\811295b9-0943-4901-90ef-c31449f78003
+\scratchpad\run_c2_rep.ps1:22 caractere:10
++     $o = & $curl "$base/texto.txt?[1-10]" 2>&1 | Out-String
++          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (  % Total    % ... Time   Current:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+Arquivo de texto de teste.
+Arquivo de texto de teste.
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0    235      0                              0
+100     27 100     27   0      0    235      0                              0
+100     27 100     27   0      0    235      0                              0
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0   6495      0                              0
+100     27 100     27   0      0   6398      0                              0
+100     27 100     27   0      0   6323      0                              0
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0  10663      0                              0
+100     27 100     27   0      0  10293      0                              0
+100     27 100     27   0      0   9970      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0  11029      0                              0
+100     27 100     27   0      0  10688      0                              0
+100     27 100     27   0      0  10489      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0  10104      0                              0
+100     27 100     27   0      0   9754      0                              0
+100     27 100     27   0      0   9517      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0  10424      0                              0
+100     27 100     27   0      0   9919      0                              0
+100     27 100     27   0      0   9557      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0  10567      0                              0
+100     27 100     27   0      0  10281      0                              0
+Arquivo de texto de teste.
+100     27 100     27   0      0   9922      0                              0
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0  11020      0                              0
+100     27 100     27   0      0  10617      0                              0
+100     27 100     27   0      0  10321      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0  10078      0                              0
+100     27 100     27   0      0   9789      0                              0
+100     27 100     27   0      0   9544      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0   9977      0                              0
+100     27 100     27   0      0   9540      0                              0
+100     27 100     27   0      0   9342      0                              0
+Arquivo de texto de teste.
+
+-------------------------------------------------------------------
+[C2 - repeticao 2] curl.exe "http://192.168.0.108:8080/texto.txt?[1-10]"
+-------------------------------------------------------------------
+curl.exe :   % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+No C:\Users\lucap\AppData\Local\Temp\claude\C--Users-lucap-Documents-Luca-Projects\811295b9-0943-4901-90ef-c31449f78003
+\scratchpad\run_c2_rep.ps1:22 caractere:10
++     $o = & $curl "$base/texto.txt?[1-10]" 2>&1 | Out-String
++          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (  % Total    % ... Time   Current:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0    538      0                              0
+100     27 100     27   0      0    537      0                              0
+100     27 100     27   0      0    536      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0  10192      0                              0
+100     27 100     27   0      0   9911      0                              0
+100     27 100     27   0      0   9687      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0  10048      0                              0
+100     27 100     27   0      0   9701      0                              0
+100     27 100     27   0      0   9473      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0   4888      0                              0
+100     27 100     27   0      0   4823      0                              0
+100     27 100     27   0      0   4788      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0   9821      0                              0
+100     27 100     27   0      0   9533      0                              0
+100     27 100     27   0      0   9133      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+Arquivo de texto de teste.
+Arquivo de texto de teste.
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0   8351      0                              0
+100     27 100     27   0      0   8194      0                              0
+100     27 100     27   0      0   8040      0                              0
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0  11092      0                              0
+100     27 100     27   0      0  10808      0                              0
+100     27 100     27   0      0  10596      0                              0
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0  11430      0                              0
+100     27 100     27   0      0  10752      0                              0
+100     27 100     27   0      0  10356      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0  10625      0                              0
+100     27 100     27   0      0  10082      0                              0
+100     27 100     27   0      0   9754      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0  13506      0                              0
+100     27 100     27   0      0  12955      0                              0
+100     27 100     27   0      0  12471      0                              0
+Arquivo de texto de teste.
+
+-------------------------------------------------------------------
+[C2 - repeticao 3] curl.exe "http://192.168.0.108:8080/texto.txt?[1-10]"
+-------------------------------------------------------------------
+curl.exe :   % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+No C:\Users\lucap\AppData\Local\Temp\claude\C--Users-lucap-Documents-Luca-Projects\811295b9-0943-4901-90ef-c31449f78003
+\scratchpad\run_c2_rep.ps1:22 caractere:10
++     $o = & $curl "$base/texto.txt?[1-10]" 2>&1 | Out-String
++          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (  % Total    % ... Time   Current:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0   2661      0                              0
+100     27 100     27   0      0   2643      0                              0
+100     27 100     27   0      0   2625      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0   9584      0                              0
+100     27 100     27   0      0   9281      0                              0
+100     27 100     27   0      0   8979      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0  11002      0                              0
+100     27 100     27   0      0  10671      0                              0
+100     27 100     27   0      0  10364      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0   8236      0                              0
+100     27 100     27   0      0   8030      0                              0
+100     27 100     27   0      0   7883      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0  11245      0                              0
+100     27 100     27   0      0  10940      0                              0
+100     27 100     27   0      0  10756      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0  11311      0                              0
+100     27 100     27   0      0  10944      0                              0
+100     27 100     27   0      0  10659      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0   9453      0                              0
+100     27 100     27   0      0   9137      0                              0
+100     27 100     27   0      0   8832      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0  10321      0                              0
+100     27 100     27   0      0   9937      0                              0
+100     27 100     27   0      0   9618      0                              0
+Arquivo de texto de teste.
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0   8817      0                              0
+Arquivo de texto de teste.
+100     27 100     27   0      0   8490      0                              0
+100     27 100     27   0      0   8323      0                              0
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+100     27 100     27   0      0   8477      0                              0
+100     27 100     27   0      0   8234      0                              0
+100     27 100     27   0      0   8023      0                              0
+Arquivo de texto de teste.
+
+FIM C2 - repeticoes.
