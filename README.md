@@ -5,7 +5,7 @@ O parsing e a geração das mensagens HTTP são feitos pelo grupo. Nenhuma bibli
 
 ## O que precisa
 
-- Python 3 (testado no 3.9). Não precisa instalar nenhuma biblioteca.
+- Python 3 (testado no 3.9 no Mac e no 3.14 no Windows). Não precisa instalar nenhuma biblioteca.
 - Para conferir se o Python existe na máquina, abra o terminal e rode `python --version`
   (no Mac/Linux pode ser `python3 --version`).
 
@@ -23,6 +23,7 @@ O parsing e a geração das mensagens HTTP são feitos pelo grupo. Nenhuma bibli
 4. Para parar o servidor, aperte `Ctrl+C` no terminal.
 
 Se aparecer um aviso do Firewall do Windows, clique em **Permitir acesso**; sem isso as outras máquinas não conseguem acessar.
+No Mac, veja também [Problemas comuns](#problemas-comuns) (permissão de Rede Local).
 
 ### Argumentos
 
@@ -35,7 +36,8 @@ O servidor escuta em `0.0.0.0` (todas as interfaces de rede), então outras máq
 
 ## Como usar
 
-1. Descubra o IP da máquina onde o servidor está rodando: no Windows, `ipconfig` (campo "Endereço IPv4").
+1. Descubra o IP da máquina onde o servidor está rodando: no Windows, `ipconfig` (campo "Endereço IPv4");
+   no Mac, `ipconfig getifaddr en0` (Wi-Fi).
 2. Em qualquer máquina da rede, abra o navegador em `http://<IP>:8080/`.
    Vai aparecer a página de teste com duas imagens, CSS e JavaScript.
 3. Cada requisição atendida aparece no terminal do servidor, com hora, IP:porta do cliente, método e código:
@@ -58,7 +60,7 @@ Troque `<IP>` pelo IP do servidor.
 | 404 | `curl -i http://<IP>:8080/nao-existe.html` | Arquivo não existe |
 | 405 | `curl -i -X POST http://<IP>:8080/` | Método não suportado (vem `Allow: GET, HEAD`) |
 
-Atenção: no 403 use `--path-as-is`. Sem ele, o próprio curl apaga os `../` (e também os `%2e%2e`) antes de enviar e a tentativa nem chega ao servidor.
+Atenção: no 403 use `--path-as-is`. Sem ele, o próprio curl apaga os `../` (e, dependendo da versão, também os `%2e%2e`) antes de enviar e a tentativa nem chega ao servidor.
 
 ## Estrutura
 
@@ -69,6 +71,20 @@ Atenção: no 403 use `--path-as-is`. Sem ele, o próprio curl apaga os `../` (e
 - `www/`: site de teste (inclui a página do teste de interoperabilidade)
 - `capturas/`: capturas do Wireshark (`.pcapng`)
 
+## Problemas comuns
+
+Teste rápido do cliente, antes de culpar o servidor: `curl.exe -v --max-time 10 http://<IP>:8080/`.
+
+| Sintoma | Causa provável | O que fazer |
+|---|---|---|
+| `Failed to connect` / timeout | IP digitado errado (ex: `192.0.108` no lugar de `192.168.0.108`) | Conferir o IP; com `curl -v` a linha `Trying ...` mostra o endereço usado |
+| `Connection refused` | Servidor não está rodando, ou está em outra porta | Conferir o terminal do servidor e o `--port` |
+| Conexão TCP abre, mas o HTTP fica carregando para sempre (Mac como servidor) | macOS 15+: o app de terminal não tem permissão de **Rede Local** | Ajustes do Sistema → Privacidade e Segurança → Rede Local → ativar o terminal usado (Terminal, Ghostty, VS Code...) e reabrir o terminal |
+| Timeout com o servidor no Windows | Firewall do Windows bloqueando o Python | Permitir o Python em rede privada |
+
+Para testar só a porta, sem HTTP: no Windows `Test-NetConnection <IP> -Port 8080` (vale a linha
+`TcpTestSucceeded`; o aviso de ping falho pode ser ignorado); no Mac/Linux `nc -vz <IP> 8080`.
+
 ---
 
 ## Passo a passo para o grupo cumprir 100% do enunciado
@@ -77,7 +93,8 @@ Atenção: no 403 use `--path-as-is`. Sem ele, o próprio curl apaga os `../` (e
 
 1. ~~Trocar o identificador do grupo~~ (feito: `SERVER_ID = 'TrabRedes-Grupo9/1.0'` em `src/response.py`).
 2. Na VDI, confirmar que o Python roda sem admin: `python --version` e depois iniciar o servidor.
-3. Verificação inicial do enunciado: rodar `ipconfig` em cada máquina, `ping <ip>` de uma para a outra
+3. ~~Verificação inicial do enunciado~~ (feita entre Mac e Windows na rede de casa; repetir na VDI se for usá-la):
+   rodar `ipconfig` em cada máquina, `ping <ip>` de uma para a outra
    e confirmar que o Wireshark captura na interface de rede. Se não houver comunicação, avisar o professor.
 4. Todos os integrantes devem ler e entender os 4 arquivos de `src/` (a apresentação vale 25% e cada um
    precisa saber explicar qualquer parte).
@@ -102,7 +119,7 @@ Sempre com o servidor numa máquina e os comandos rodando em **outra** máquina.
    ```
 
    Todas devem responder `403 Forbidden`. Copiar requisição e resposta no relatório.
-   O `--path-as-is` é obrigatório nas duas primeiras: sem ele o curl apaga os `../` e também os `%2e%2e` antes de enviar (manda só `GET /Windows/win.ini`, que dá 404). Na terceira não precisa, porque o curl não mexe no `%2f`. Use `curl -v` para conferir na linha `> GET` o que realmente foi enviado.
+   O `--path-as-is` é obrigatório na primeira e recomendado na segunda: sem ele o curl apaga os `../` e, em algumas versões (ex: 8.19 no Windows), também os `%2e%2e` antes de enviar (manda só `GET /Windows/win.ini`, que dá 404). Na terceira não precisa, porque o curl não mexe no `%2f`. Use `curl -v` para conferir na linha `> GET` o que realmente foi enviado.
 3. **Captura de uma transação completa:** abrir o Wireshark na máquina do servidor com o filtro
    `tcp.port == 8080`, fazer `curl http://<IP>:8080/` da outra máquina, e no relatório marcar:
    o handshake (SYN, SYN-ACK, ACK), o pacote com o `GET`, os pacotes da resposta e o encerramento (FIN).
@@ -172,7 +189,7 @@ Cobrir os 10 itens do enunciado:
 
 ## Checklist
 
-### Implementação (testado localmente, inclusive pelo IP de rede da máquina)
+### Implementação (testado localmente e entre duas máquinas: servidor no Mac, cliente no Windows)
 
 - [x] Argumentos `--port` e `--root`
 - [x] Escuta em `0.0.0.0`
@@ -196,14 +213,17 @@ Cobrir os 10 itens do enunciado:
 - [x] Cliente HTTP/1.0 fecha por padrão (só mantém aberta com `Connection: keep-alive`)
 - [x] Timeout de 5 s para conexão ociosa
 - [x] Várias requisições em sequência na mesma conexão
-- [x] Página de interoperabilidade (`www/index.html` com imagens, CSS e JS) renderiza no navegador
+- [x] Página de interoperabilidade (`www/index.html` com imagens, CSS e JS) renderiza no navegador,
+      inclusive aberta de outra máquina (navegador e `curl.exe` no Windows, todas as respostas 200)
+- [x] Log do servidor sem linhas misturadas quando várias threads respondem ao mesmo tempo
 - [x] Comandos de C1 e C2 conferidos (C1 abre 10 conexões, C2 abre 1)
 
 ### Falta o grupo fazer
 
 - [ ] Testar na VDI (Python disponível sem admin)
-- [ ] Verificação inicial: ipconfig, ping entre as máquinas, Wireshark capturando
-- [ ] Testes entre duas máquinas diferentes (tudo acima foi testado só numa máquina)
+- [x] Verificação inicial: ipconfig, ping entre as máquinas (49/49 respostas, RTT médio ~6,5 ms), Wireshark capturando
+- [x] Acesso entre duas máquinas diferentes (Mac servidor, Windows cliente)
+- [ ] Tabela de conformidade e testes de segurança rodados de outra máquina (passos 2.1 e 2.2)
 - [ ] Teste com duas máquinas acessando ao mesmo tempo (print/captura)
 - [ ] Captura de uma transação completa feita de outra máquina
 - [ ] RTT medido com ping
