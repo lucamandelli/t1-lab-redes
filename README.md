@@ -223,13 +223,33 @@ Cobrir os 10 itens do enunciado:
 - [ ] Testar na VDI (Python disponível sem admin)
 - [x] Verificação inicial: ipconfig, ping entre as máquinas (49/49 respostas, RTT médio ~6,5 ms), Wireshark capturando
 - [x] Acesso entre duas máquinas diferentes (Mac servidor, Windows cliente)
-- [ ] Tabela de conformidade e testes de segurança rodados de outra máquina (passos 2.1 e 2.2)
-- [ ] Teste com duas máquinas acessando ao mesmo tempo (print/captura)
-- [ ] Captura de uma transação completa feita de outra máquina
-- [ ] RTT medido com ping
-- [ ] `capturas/c1.pcapng` e `capturas/c2.pcapng`
-- [ ] Tabela C1 vs C2 e análises (itens 7 a 10 do relatório)
+- [x] Tabela de conformidade e testes de segurança rodados de outra máquina (passos 2.1 e 2.2; saídas em `evidencias/evidencias-windows.txt`)
+- [x] Teste com duas máquinas acessando ao mesmo tempo (Windows + celular; trecho do log em `evidencias/simultaneo.log`)
+- [x] Captura de uma transação completa feita de outra máquina (primeira conexão de `c1.pcapng`, filtro `tcp.stream eq 0`)
+- [x] RTT medido com ping (média 39 ms, mín 1, máx 124; ver [Resultados das medições](#resultados-das-medições))
+- [x] `capturas/c1.pcapng` e `capturas/c2.pcapng`
+- [ ] Análises dos itens 8 a 10 no relatório (tabela C1 vs C2 já em [Resultados das medições](#resultados-das-medições))
 - [ ] Relatório em PDF
 - [ ] Teste de interoperabilidade com outro grupo (em aula)
 - [ ] Todos os integrantes estudarem o código para a apresentação
 - [ ] Montar o .zip e entregar
+
+## Resultados das medições
+
+Feitas em 2026-10-05: servidor no Mac (`192.168.0.108`), cliente Windows (`192.168.0.105`), Wi-Fi da mesma rede.
+Saídas e logs em `evidencias/` (pasta de apoio para o relatório, não vai no .zip).
+
+| Métrica | C1 | C2 | Economia |
+|---|---|---|---|
+| Handshakes TCP | 10 | 1 | |
+| Pacotes | 109 | 38 | 65,1% |
+| Bytes | 9207 | 4855 | 47,3% |
+| Tempo total | 54,4 ms | 39,9 ms | 14,5 ms |
+
+- **RTT pelo ping** (`ping -n 20`): média 39 ms, mín 1 ms, máx 124 ms. A variação vem da economia de energia
+  do Wi-Fi: com 1 s entre pings, a placa "dorme" e o primeiro pacote demora.
+- **RTT pelo handshake TCP** (campo `tcp.analysis.initial_rtt` em `c1.pcapng`): média 1,85 ms (1,51 a 2,25 ms)
+  nas 10 conexões. É o valor que explica a diferença C1 − C2: 9 conexões a mais × 1,85 ms ≈ 16,7 ms,
+  perto dos 14,5 ms medidos.
+- O C2 foi repetido 3 vezes (39,9 / 40,9 / 41,5 ms); a primeira execução teve uma pausa de ~32 ms do
+  curl entre a 5ª e a 6ª requisição e foi descartada.
