@@ -58,7 +58,7 @@ Troque `<IP>` pelo IP do servidor.
 | 404 | `curl -i http://<IP>:8080/nao-existe.html` | Arquivo não existe |
 | 405 | `curl -i -X POST http://<IP>:8080/` | Método não suportado (vem `Allow: GET, HEAD`) |
 
-Atenção: no 403 use `--path-as-is`. Sem ele, o próprio curl apaga os `../` antes de enviar e a tentativa nem chega ao servidor.
+Atenção: no 403 use `--path-as-is`. Sem ele, o próprio curl apaga os `../` (e também os `%2e%2e`) antes de enviar e a tentativa nem chega ao servidor.
 
 ## Estrutura
 
@@ -75,7 +75,7 @@ Atenção: no 403 use `--path-as-is`. Sem ele, o próprio curl apaga os `../` an
 
 ### 1. Antes de tudo
 
-1. Trocar o identificador do grupo em `src/response.py`, na linha `SERVER_ID = 'TrabRedes-GrupoX/1.0'`.
+1. ~~Trocar o identificador do grupo~~ (feito: `SERVER_ID = 'TrabRedes-Grupo9/1.0'` em `src/response.py`).
 2. Na VDI, confirmar que o Python roda sem admin: `python --version` e depois iniciar o servidor.
 3. Verificação inicial do enunciado: rodar `ipconfig` em cada máquina, `ping <ip>` de uma para a outra
    e confirmar que o Wireshark captura na interface de rede. Se não houver comunicação, avisar o professor.
@@ -94,7 +94,7 @@ Sempre com o servidor numa máquina e os comandos rodando em **outra** máquina.
    ```
 
    ```bash
-   curl -i http://<IP>:8080/%2e%2e/%2e%2e/Windows/win.ini
+   curl -i --path-as-is http://<IP>:8080/%2e%2e/%2e%2e/Windows/win.ini
    ```
 
    ```bash
@@ -102,6 +102,7 @@ Sempre com o servidor numa máquina e os comandos rodando em **outra** máquina.
    ```
 
    Todas devem responder `403 Forbidden`. Copiar requisição e resposta no relatório.
+   O `--path-as-is` é obrigatório nas duas primeiras: sem ele o curl apaga os `../` e também os `%2e%2e` antes de enviar (manda só `GET /Windows/win.ini`, que dá 404). Na terceira não precisa, porque o curl não mexe no `%2f`. Use `curl -v` para conferir na linha `> GET` o que realmente foi enviado.
 3. **Captura de uma transação completa:** abrir o Wireshark na máquina do servidor com o filtro
    `tcp.port == 8080`, fazer `curl http://<IP>:8080/` da outra máquina, e no relatório marcar:
    o handshake (SYN, SYN-ACK, ACK), o pacote com o `GET`, os pacotes da resposta e o encerramento (FIN).
@@ -177,7 +178,10 @@ Cobrir os 10 itens do enunciado:
 - [x] Escuta em `0.0.0.0`
 - [x] Sockets TCP direto (socket, bind, listen, accept, recv, send), sem biblioteca HTTP
 - [x] Parser acumula bytes até a linha em branco e guarda o que sobra para a próxima requisição
-      (testado com requisição enviada byte a byte e com duas requisições no mesmo envio)
+      (testado com requisição enviada byte a byte, com duas requisições no mesmo envio e com uma requisição
+      seguida da metade da próxima)
+- [x] Corpo da requisição (ex: POST com `Content-Length`) consumido junto, para não virar a próxima requisição
+- [x] 400 também para versão fora do formato `HTTP/x.y`
 - [x] Percent-encoding decodificado no caminho (`%20` → espaço)
 - [x] GET e HEAD (HEAD com os mesmos cabeçalhos do GET e Content-Length do corpo, sem corpo)
 - [x] 405 com `Allow: GET, HEAD` para outros métodos
@@ -185,10 +189,11 @@ Cobrir os 10 itens do enunciado:
 - [x] Content-Length correto em todas as respostas (inclusive erros e HEAD)
 - [x] Content-Type para .html, .css, .js, .json, .txt, .png, .jpg, .pdf e `application/octet-stream` para o resto
 - [x] Date no formato IMF-fixdate em GMT
-- [x] Cabeçalho Server
+- [x] Cabeçalho Server (`TrabRedes-Grupo9/1.0`)
 - [x] 403 para travessia de diretório (testado com `../`, `%2e%2e`, `%2f` e outras variações)
 - [x] Concorrência: thread por conexão (testado: uma conexão parada não trava as outras; 10 clientes ao mesmo tempo)
 - [x] Conexão persistente por padrão; `Connection: close` responde com o mesmo cabeçalho e fecha
+- [x] Cliente HTTP/1.0 fecha por padrão (só mantém aberta com `Connection: keep-alive`)
 - [x] Timeout de 5 s para conexão ociosa
 - [x] Várias requisições em sequência na mesma conexão
 - [x] Página de interoperabilidade (`www/index.html` com imagens, CSS e JS) renderiza no navegador
@@ -196,7 +201,6 @@ Cobrir os 10 itens do enunciado:
 
 ### Falta o grupo fazer
 
-- [ ] Trocar `SERVER_ID` em `src/response.py` pelo nome do grupo
 - [ ] Testar na VDI (Python disponível sem admin)
 - [ ] Verificação inicial: ipconfig, ping entre as máquinas, Wireshark capturando
 - [ ] Testes entre duas máquinas diferentes (tudo acima foi testado só numa máquina)
