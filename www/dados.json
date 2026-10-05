@@ -1,9 +1,1 @@
-{
-  "trabalho": "Servidor HTTP/1.1 sobre sockets TCP",
-  "itens": [
-    "Parsing com buffer acumulado",
-    "GET e HEAD",
-    "Proteção contra travessia de diretório",
-    "Conexões persistentes com timeout"
-  ]
-}
+{ "mensagem": "arquivo JSON de teste" }

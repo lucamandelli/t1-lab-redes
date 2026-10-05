@@ -5,7 +5,7 @@
   "description": "Servidor HTTP/1.1 sobre sockets TCP (Trabalho 1 de Redes)",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/src/main.js --port 8080 --root ./www"
+    "start": "node dist/main.js --port 8080 --root ./www"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

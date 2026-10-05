@@ -1,2 +1,1 @@
-Arquivo de texto simples servido como text/plain.
-Acentuação: ação, coração, pão.
+Arquivo de texto de teste.

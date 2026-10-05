@@ -1,181 +1,87 @@
-// Atende UMA conexão TCP: acumula bytes, extrai requisições, responde em ordem
-// e decide se a conexão continua aberta (persistente) ou fecha.
-import * as fs from 'node:fs';
+// Atende uma conexão TCP: acumula bytes, extrai requisições, responde em ordem
+// e mantém a conexão aberta (persistente) até o cliente pedir para fechar ou ela ficar ociosa.
+import * as fs from 'node:fs/promises';
 import * as net from 'node:net';
+import * as path from 'node:path';
 import { HttpRequest, parseRequest } from './parser';
-import { buildHead, errorPage } from './response';
-import { resolveFile } from './files';
-import { contentType } from './mime';
-import { log } from './log';
+import { buildHead, contentType, REASONS } from './response';
 
-export interface ServerConfig {
-  root: string; // raiz canônica (realpath)
-  idleTimeoutMs: number; // tempo máximo de conexão ociosa
-}
+const IDLE_TIMEOUT_MS = 5000;
 
-// Arquivos até esse tamanho vão num único write (cabeçalho + corpo juntos -> menos pacotes).
-// Maiores são enviados em stream, sem carregar tudo na memória.
-const SMALL_FILE_BYTES = 64 * 1024;
+export function handleConnection(socket: net.Socket, root: string): void {
+  const client = `${socket.remoteAddress}:${socket.remotePort}`;
+  let buffer = Buffer.alloc(0); // bytes recebidos e ainda não processados
+  let busy = false; // respondendo uma requisição (as respostas precisam sair em ordem)
+  let closing = false; // já decidimos fechar a conexão
 
-let nextConnectionId = 1;
+  // Conexão ociosa por 5 s -> fecha
+  socket.setTimeout(IDLE_TIMEOUT_MS);
+  socket.on('timeout', () => socket.end());
+  socket.on('error', (err) => console.log(`${client} erro: ${err.message}`));
 
-export function handleConnection(socket: net.Socket, config: ServerConfig): void {
-  const id = nextConnectionId++;
-  const client = `${(socket.remoteAddress ?? '?').replace(/^::ffff:/, '')}:${socket.remotePort}`;
-  const tag = `#${id} ${client}`;
-
-  let buffer = Buffer.alloc(0); // bytes recebidos e ainda não consumidos pelo parser
-  let busy = false; // processando uma requisição (respostas precisam sair em ordem)
-  let closing = false; // já decidimos fechar: ignorar novas requisições
-  let peerEnded = false; // cliente fechou o lado de envio dele (FIN)
-  let requests = 0;
-
-  log(tag, 'conexão aberta');
-
-  // Envia cada write na hora, sem esperar o ACK do anterior (desliga o algoritmo de Nagle).
-  // Sem isso, Nagle + ACK atrasado do cliente pode segurar a resposta por até ~200 ms.
-  socket.setNoDelay(true);
-
-  // Timeout de ociosidade: sem bytes chegando/saindo por idleTimeoutMs -> fecha
-  socket.setTimeout(config.idleTimeoutMs);
-  socket.on('timeout', () => {
-    if (busy) return; // está enviando um arquivo para cliente lento: não é ociosidade
-    log(tag, `ociosa por ${config.idleTimeoutMs / 1000}s, fechando`);
-    closing = true;
-    socket.end(); // envia FIN
-  });
-
-  // recv(): cada 'data' é um pedaço arbitrário do fluxo TCP
+  // Cada 'data' é um pedaço qualquer do fluxo TCP (equivale a um recv())
   socket.on('data', (chunk) => {
     buffer = Buffer.concat([buffer, chunk]);
-    void processBuffer();
+    processBuffer();
   });
-  socket.on('end', () => {
-    peerEnded = true;
-    void processBuffer(); // responde o que já chegou e depois fecha
-  });
-  socket.on('error', (err) => log(tag, `erro: ${err.message}`));
-  socket.on('close', () => log(tag, `conexão fechada (${requests} requisições)`));
 
-  // Extrai e responde todas as requisições completas do buffer, uma de cada vez.
+  // Responde todas as requisições completas que estão no buffer, uma de cada vez
   async function processBuffer(): Promise<void> {
-    if (busy) return; // a chamada em andamento vai ver os bytes novos no próximo loop
+    if (busy) return; // a execução em andamento vai pegar os bytes novos no próximo loop
     busy = true;
-    try {
-      while (!closing && !socket.destroyed) {
-        const result = parseRequest(buffer);
-        if (result.status === 'incomplete') break; // esperar mais bytes
+    while (!closing) {
+      const result = parseRequest(buffer);
+      if (result.status === 'incomplete') break;
 
-        if (result.status === 'error') {
-          requests++;
-          sendError(400, false, false, {}, result.reason);
-          log(tag, `requisição malformada -> 400 (${result.reason})`);
-          closing = true; // fluxo pode estar dessincronizado: melhor fechar
-          socket.end();
-          break;
-        }
-
-        // remove a requisição do buffer; o que sobrar é o começo da próxima
-        buffer = buffer.subarray(result.consumed);
-        requests++;
-        const keepAlive = await respond(result.request);
-        if (!keepAlive) {
-          closing = true;
-          socket.end(); // envia o que falta e depois FIN
-        }
-      }
-      if (peerEnded && !closing) {
+      if (result.status === 'error') {
+        send(400, 'GET', false);
         closing = true;
-        socket.end();
+        break;
       }
-    } finally {
-      busy = false;
+
+      buffer = buffer.subarray(result.consumed); // o que sobra é o começo da próxima requisição
+      const keepAlive = await respond(result.request);
+      if (!keepAlive) closing = true;
     }
+    if (closing) socket.end(); // envia o que falta e fecha (FIN)
+    busy = false;
   }
 
-  // Responde uma requisição. Retorna true se a conexão deve continuar aberta.
   async function respond(req: HttpRequest): Promise<boolean> {
-    const keepAlive = wantsKeepAlive(req);
-    const isHead = req.method === 'HEAD';
-    let status: number;
-    let bodySize = 0;
+    // HTTP/1.1 é persistente por padrão; só fecha se o cliente pedir
+    const keepAlive = req.headers.get('connection')?.toLowerCase() !== 'close';
 
     if (req.method !== 'GET' && req.method !== 'HEAD') {
-      status = 405;
-      bodySize = sendError(405, keepAlive, false, { Allow: 'GET, HEAD' });
+      send(405, req.method, keepAlive, { Allow: 'GET, HEAD' });
     } else {
-      const file = await resolveFile(config.root, req.path);
-      if (file.kind === 'forbidden') {
-        status = 403;
-        bodySize = sendError(403, keepAlive, isHead, {}, 'Caminho fora do diretório raiz.');
-      } else if (file.kind === 'notfound') {
-        status = 404;
-        bodySize = sendError(404, keepAlive, isHead, {}, `Arquivo não encontrado: ${req.path}`);
+      // Junta o caminho com a raiz, resolvendo os "..". Se o resultado sair da raiz -> 403
+      const urlPath = req.path === '/' ? '/index.html' : req.path; // "/" serve a página inicial
+      const filePath = path.resolve(root, '.' + urlPath);
+      if (filePath !== root && !filePath.startsWith(root + path.sep)) {
+        send(403, req.method, keepAlive);
       } else {
-        status = 200;
-        bodySize = file.size;
-        const head = buildHead(200, {
-          'Content-Type': contentType(file.fullPath),
-          'Content-Length': file.size, // HEAD também informa o tamanho que o corpo teria
-          Connection: keepAlive ? 'keep-alive' : 'close',
-        });
-        if (isHead) socket.write(head);
-        else if (file.size <= SMALL_FILE_BYTES) {
-          const body = await fs.promises.readFile(file.fullPath);
-          socket.write(Buffer.concat([head, body.subarray(0, file.size)]));
-        } else {
-          socket.write(head);
-          await streamFile(file.fullPath, file.size);
+        try {
+          const body = await fs.readFile(filePath);
+          send(200, req.method, keepAlive, {}, body, contentType(filePath));
+        } catch {
+          send(404, req.method, keepAlive); // não existe (ou é diretório)
         }
       }
     }
-
-    log(tag, `${req.method} ${req.target} ${req.version} -> ${status} (${bodySize} B, ${keepAlive ? 'keep-alive' : 'close'})`);
     return keepAlive;
   }
 
-  // Envia resposta de erro com corpo HTML. Retorna o tamanho do corpo.
-  function sendError(status: number, keepAlive: boolean, isHead: boolean, extra: Record<string, string>, detail = ''): number {
-    const body = errorPage(status, detail);
+  // Envia a resposta. Erros levam um corpo de texto curto. HEAD não leva corpo,
+  // mas o Content-Length informa o tamanho que o corpo teria.
+  function send(status: number, method: string, keepAlive: boolean, extra: Record<string, string> = {},
+    body = Buffer.from(`${status} ${REASONS[status]}\n`), type = 'text/plain'): void {
     const head = buildHead(status, {
-      ...extra,
-      'Content-Type': 'text/html; charset=utf-8',
+      'Content-Type': type,
       'Content-Length': body.length,
       Connection: keepAlive ? 'keep-alive' : 'close',
+      ...extra,
     });
-    socket.write(isHead ? head : Buffer.concat([head, body]));
-    return body.length;
+    socket.write(method === 'HEAD' ? head : Buffer.concat([head, body]));
+    console.log(`${new Date().toISOString()} ${client} ${method} -> ${status}`);
   }
-
-  // Envia um arquivo grande aos poucos. pipe() respeita o ritmo do cliente (backpressure)
-  // e o event loop continua livre para atender outras conexões.
-  function streamFile(fullPath: string, size: number): Promise<void> {
-    return new Promise((resolve) => {
-      // end: size-1 garante que nunca enviamos mais bytes do que o Content-Length anunciou
-      const stream = fs.createReadStream(fullPath, { start: 0, end: size - 1 });
-      const onClose = () => {
-        stream.destroy(); // cliente foi embora no meio do envio
-        resolve();
-      };
-      socket.once('close', onClose);
-      stream.on('end', () => {
-        socket.off('close', onClose);
-        resolve();
-      });
-      stream.on('error', (err) => {
-        log(tag, `erro lendo arquivo: ${err.message}`);
-        socket.destroy(); // cabeçalho já foi: não dá para trocar por um erro
-      });
-      stream.pipe(socket, { end: false }); // end:false -> não fecha o socket ao terminar
-    });
-  }
-}
-
-// HTTP/1.1: persistente por padrão, a menos que o cliente mande "Connection: close".
-// HTTP/1.0: fecha por padrão, a menos que o cliente mande "Connection: keep-alive".
-function wantsKeepAlive(req: HttpRequest): boolean {
-  const tokens = (req.headers.get('connection') ?? '').toLowerCase().split(',').map((t) => t.trim());
-  if (tokens.includes('close')) return false;
-  if (req.version === 'HTTP/1.0') return tokens.includes('keep-alive');
-  return true;
 }
