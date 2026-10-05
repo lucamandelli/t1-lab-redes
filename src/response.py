@@ -33,7 +33,7 @@ def content_type(file_path):
 def build_head(status, headers):
     lines = [
         f'HTTP/1.1 {status} {REASONS[status]}',
-        f'Date: {formatdate(usegmt=True)}',  # IMF-fixdate em GMT: "Sun, 06 Nov 1994 08:49:37 GMT"
+        f'Date: {formatdate(usegmt=True)}',  
         f'Server: {SERVER_ID}',
     ]
     for name, value in headers.items():
