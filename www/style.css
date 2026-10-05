@@ -1,0 +1,38 @@
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #f4f6f8;
+  color: #1d2733;
+}
+
+main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+h1 {
+  color: #1f5fa8;
+}
+
+.imagens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+figure {
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  border: 1px solid #c9d2dc;
+}
+
+#status.ok {
+  color: #1c7c3c;
+  font-weight: bold;
+}

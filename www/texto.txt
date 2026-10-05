@@ -1,0 +1,2 @@
+Arquivo de texto simples servido como text/plain.
+Acentuação: ação, coração, pão.

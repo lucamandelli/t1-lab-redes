@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trabalho 1 — Servidor HTTP/1.1</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main>
+    <h1>Servidor HTTP/1.1 sobre TCP</h1>
+    <p>Página do teste de interoperabilidade. Se tudo abaixo aparecer, o navegador
+       fez várias requisições (HTML, CSS, JS, PNG, JPG, JSON) e todas foram atendidas.</p>
+
+    <section class="imagens">
+      <figure>
+        <img src="/imagem.png" alt="Imagem PNG de teste" width="320" height="180">
+        <figcaption>imagem.png</figcaption>
+      </figure>
+      <figure>
+        <img src="/foto.jpg" alt="Imagem JPG de teste" width="320" height="180">
+        <figcaption>foto.jpg</figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <h2>Dados carregados via JavaScript</h2>
+      <p id="status">JavaScript não carregou.</p>
+      <ul id="dados"></ul>
+    </section>
+
+    <section>
+      <h2>Outros arquivos</h2>
+      <ul>
+        <li><a href="/texto.txt">texto.txt</a> (text/plain)</li>
+        <li><a href="/dados.json">dados.json</a> (application/json)</li>
+        <li><a href="/documento.pdf">documento.pdf</a> (application/pdf)</li>
+        <li><a href="/arquivo.xyz">arquivo.xyz</a> (extensão desconhecida → application/octet-stream)</li>
+        <li><a href="/pasta%20com%20espaco/leia-me.txt">pasta com espaco/leia-me.txt</a> (percent-encoding)</li>
+        <li><a href="/nao-existe.html">nao-existe.html</a> (404)</li>
+      </ul>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>
